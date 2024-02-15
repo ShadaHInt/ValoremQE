@@ -1,0 +1,57 @@
+steps:
+- checkout: self
+  persistCredentials: True
+
+- task: UseDotNet@2
+  displayName: 'UseDotNet6'
+  inputs:
+    packageType: 'sdk'
+    version: '6.x'
+
+- task: NuGetToolInstaller@1
+  displayName: 'InstallNuget'
+  continueOnError: true
+  inputs:
+    versionSpec: '6.4.0'
+    checkLatest: true
+
+- task: NuGetCommand@2
+  displayName: 'Restore'
+  inputs:
+    restoreSolution: '**\ValoremDotComTestAutomation.sln'
+    feedsToUse: 'config'
+    nugetConfigPath: 'NuGet.config'
+    includeNuGetOrg: true
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    projects: '**/*.csproj'
+    arguments: '--no-restore'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/*.csproj'
+    zipAfterPublish: false
+
+- task: PublishSymbols@2
+  displayName: 'Publish symbols path'
+  inputs:
+    SearchPattern: '**\bin\**\*.pdb'
+    PublishSymbols: false
+    continueOnError: true
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(Build.SourcesDirectory) '
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    targetPath: '$(build.artifactstagingdirectory)'
+    artifact: 'drop'
+    publishLocation: "pipeline"

@@ -1,0 +1,21 @@
+{
+    "cSpell.words": [
+        "Argb",
+        "Bannered",
+        "cref",
+        "datalist",
+        "Doxygen",
+        "inheritdoc",
+        "notnull",
+        "ontable",
+        "overtype",
+        "Regexes",
+        "Seahawks",
+        "sqlproj",
+        "tfvars",
+        "typeparam",
+        "valoremreply",
+        "WEBUI"
+    ],
+    "dotnet-test-explorer.testProjectPath": "**/*.sln"
+}

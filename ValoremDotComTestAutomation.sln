@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{031FA6FD-E577-4072-8640-8914DE6B53D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValoremDotCom", "Tests\ValoremDotCom\ValoremDotCom.csproj", "{8165378E-BB3F-4FFD-A05C-F288878538F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{816D3F50-4BB9-41FB-846C-67AE06E1F89C}"
+	ProjectSection(SolutionItems) = preProject
+		Infrastructure\azure-pipeline-weekly-test-automation.yml = Infrastructure\azure-pipeline-weekly-test-automation.yml
+		Infrastructure\azure-pipelines-nightly-test-automation.yml = Infrastructure\azure-pipelines-nightly-test-automation.yml
+		Infrastructure\azure-pipelines.yml = Infrastructure\azure-pipelines.yml
+		Infrastructure\nightly-project-build-tasks.yml = Infrastructure\nightly-project-build-tasks.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8165378E-BB3F-4FFD-A05C-F288878538F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8165378E-BB3F-4FFD-A05C-F288878538F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8165378E-BB3F-4FFD-A05C-F288878538F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8165378E-BB3F-4FFD-A05C-F288878538F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8165378E-BB3F-4FFD-A05C-F288878538F7} = {031FA6FD-E577-4072-8640-8914DE6B53D1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FCCC3768-0CCF-4F97-8B4C-463872160913}
+	EndGlobalSection
+EndGlobal

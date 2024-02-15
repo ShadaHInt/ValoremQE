@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+	  <IsPackable>false</IsPackable>
+	  <OutputType>Library</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Scenarios\execution_times.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommonTestLibrary.AzureDevOps" Version="1.7.5" />
+		<PackageReference Include="CommonTestLibrary.Frameworks.General" Version="1.5.6" />
+		<PackageReference Include="CommonTestLibrary.Frameworks.WebUi" Version="3.1.1" />
+		<PackageReference Include="CommonTestLibrary.Json" Version="1.1.3" />
+		<PackageReference Include="CommonTestLibrary.Logging" Version="1.3.3" />
+		<PackageReference Include="CommonTestLibrary.Planner" Version="2.0.10" />
+		<PackageReference Include="CommonTestLibrary.SeleniumUtilities" Version="3.2.0" />
+		<PackageReference Include="CommonTestLibrary.Utilities" Version="1.8.4" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.2" />
+		<PackageReference Include="MSTest.TestAdapter" Version="3.0.4" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.0.4" />
+		<PackageReference Include="Selenium.Axe" Version="4.0.13" />
+		<PackageReference Include="Selenium.Support" Version="4.10.0" />
+		<PackageReference Include="Selenium.WebDriver" Version="4.10.0" />
+		<PackageReference Include="WebDriverManager" Version="2.16.2" />
+	</ItemGroup>
+
+</Project>

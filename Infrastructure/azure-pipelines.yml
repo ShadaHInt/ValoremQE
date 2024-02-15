@@ -1,0 +1,46 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+name: ValoremDotCom-TestAutomation-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  - Main
+
+pool:
+  vmImage: windows-latest
+
+steps:
+  - task: UseDotNet@2
+    displayName: 'UseDotNet6'
+    inputs:
+      packageType: 'sdk'
+      version: '6.x'
+
+  - task: NuGetToolInstaller@1
+    displayName: 'InstallNuget'
+    continueOnError: true
+    inputs:
+      versionSpec: '6.4.0'
+      checkLatest: true
+
+  - task: NuGetCommand@2
+    displayName: 'Restore'
+    inputs:
+      restoreSolution: '**\ValoremDotComTestAutomation.sln'
+      feedsToUse: 'config'
+      nugetConfigPath: 'NuGet.config'
+      includeNuGetOrg: true
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: '**/*.csproj'
+      arguments: '--no-restore'
+
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'publish'
+      publishWebProjects: false
+      projects: '**/*.csproj'
+      zipAfterPublish: false

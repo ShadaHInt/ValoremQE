@@ -1,0 +1,78 @@
+name: valoremdotcom-test-automation-nightly-build-$(date:yyyyMMdd)$(rev:.r)
+
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    exclude:
+    - '*'
+
+schedules:
+- cron: 0 15 * * 1,2,3,4,5
+  branches:
+    include:
+    - main
+
+variables:
+- name: BuildPlatform
+  value: 'any cpu'
+- name: BuildConfiguration
+  value: 'release'
+- name: solution
+  value: 'ValoremDotComTestAutomation.sln'
+
+stages:
+- stage: build
+  jobs:
+  - job: 'Phase_1'
+    displayName: Phase 1 
+    cancelTimeoutInMinutes: 1
+    pool:
+      name: Azure Pipelines
+      vmImage: windows-latest
+
+    workspace:
+      clean: all
+
+    steps:
+    - template: nightly-project-build-tasks.yml
+  
+- stage: ValoremDotCom_Tests_Prod
+  dependsOn: build
+  condition: succeeded()
+  jobs:
+  - job: 'ValoremDotCom_Tests_Prod'
+    displayName: 'ValoremDotCom Tests - Prod'
+    timeoutInMinutes: 60
+    condition: "succeeded()"
+    pool:
+      name: Azure Pipelines
+      vmImage: windows-latest
+
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        source: 'current'
+        artifact: drop
+        path: $(Build.SourcesDirectory)/bin
+
+    - task: DotNetCoreCLI@2
+      displayName: 'ValoremDotCom - MustPass Tests'
+      inputs:
+        command: test
+        projects: '$(Build.SourcesDirectory)/bin/Tests/ValoremDotCom/bin/Debug/net6.0/ValoremDotCom.dll'
+        arguments: '--filter TestCategory=MustPass'
+        testRunTitle: 'Test Automation - ValoremDotCom - MustPass - Prod'
+        workingDirectory: '$(Build.SourcesDirectory)'
+      continueOnError: true
+
+    - task: DotNetCoreCLI@2
+      displayName: 'ValoremDotCom - Nightly Tests'
+      inputs:
+        command: test
+        projects: '$(Build.SourcesDirectory)/bin/Tests/ValoremDotCom/bin/Debug/net6.0/ValoremDotCom.dll'
+        arguments: '--filter TestCategory=Nightly'
+        testRunTitle: 'Test Automation - ValoremDotCom - Nightly - Prod'
+        workingDirectory: '$(Build.SourcesDirectory)'
+      continueOnError: true
